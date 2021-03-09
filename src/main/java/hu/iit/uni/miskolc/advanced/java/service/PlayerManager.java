@@ -11,5 +11,7 @@ public interface PlayerManager {
 
     Player fetchByName(String name);
 
+    Player updatePlayer(Player player);
+
     Collection<Player> fetchPlayers();
 }

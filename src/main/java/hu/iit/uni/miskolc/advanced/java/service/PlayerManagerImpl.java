@@ -27,6 +27,11 @@ public class PlayerManagerImpl implements PlayerManager {
     }
 
     @Override
+    public Player updatePlayer(Player player) {
+        return repository.save(player);
+    }
+
+    @Override
     public Collection<Player> fetchPlayers() {
         return repository.readAll();
     }
