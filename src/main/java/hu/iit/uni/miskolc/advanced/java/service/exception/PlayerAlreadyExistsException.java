@@ -17,7 +17,8 @@ public class PlayerAlreadyExistsException extends Exception {
         super(cause);
     }
 
-    public PlayerAlreadyExistsException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+    public PlayerAlreadyExistsException(
+            String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
         super(message, cause, enableSuppression, writableStackTrace);
     }
 }

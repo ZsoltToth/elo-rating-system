@@ -10,5 +10,6 @@ public interface PlayerManager {
     void register(Player player) throws PlayerAlreadyExistsException;
 
     Player fetchByName(String name);
+
     Collection<Player> fetchPlayers();
 }
