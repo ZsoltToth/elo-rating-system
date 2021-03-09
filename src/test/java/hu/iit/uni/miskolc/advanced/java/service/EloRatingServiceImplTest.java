@@ -30,6 +30,7 @@ class EloRatingServiceImplTest {
         Player bob = new Player("bob", 1000);
         final int aliceWin = 1;
         final int bobWin = 0;
+        doReturn(alice).doReturn(bob).when(playerManager).updatePlayer(any());
         // when
         eloRatingService.updatePlayerRankings(alice, bob, aliceWin, bobWin);
         // then

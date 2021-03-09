@@ -15,8 +15,8 @@ public class EloRatingServiceImpl implements EloRatingService {
         double userExpected = logisticProbability(user.getScore(), opponent.getScore());
         double opponentExpected = logisticProbability(opponent.getScore(), user.getScore());
         user.setScore(calculateScore(user.getScore(), winRate(userWin, opponentWin), userExpected));
-        playerManager.updatePlayer(user);
         opponent.setScore(calculateScore(opponent.getScore(), winRate(opponentWin, userWin), opponentExpected));
+        playerManager.updatePlayer(user);
         playerManager.updatePlayer(opponent);
     }
 
