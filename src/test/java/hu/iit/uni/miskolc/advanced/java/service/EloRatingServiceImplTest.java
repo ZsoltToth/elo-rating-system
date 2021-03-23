@@ -7,12 +7,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(MockitoExtension.class)
 class EloRatingServiceImplTest {
@@ -20,17 +18,31 @@ class EloRatingServiceImplTest {
     @Mock
     private PlayerManager playerManager;
 
+    @Mock
+    private EloRatingCalculator eloRatingCalculator;
+
     @InjectMocks
     private EloRatingServiceImpl eloRatingService;
 
     @Test
     void happyPath() {
         // given
-        Player alice = new Player("alice", 1000);
-        Player bob = new Player("bob", 1000);
+        final int aliceOldScore = 1000;
+        final int aliceNewScore = 1008;
+        final int bobOldScore = 1000;
+        final int bobNewScore = 992;
+        Player alice = new Player("alice", aliceOldScore);
+        Player bob = new Player("bob", bobOldScore);
         final int aliceWin = 1;
         final int bobWin = 0;
         doReturn(alice).doReturn(bob).when(playerManager).updatePlayer(any());
+        doReturn(
+                EloRatingCalculator.CalculatedScores.builder()
+                        .user1(aliceNewScore)
+                        .user2(bobNewScore)
+                        .build())
+                .when(eloRatingCalculator)
+                .calculateScores(any());
         // when
         eloRatingService.updatePlayerRankings(alice, bob, aliceWin, bobWin);
         // then
