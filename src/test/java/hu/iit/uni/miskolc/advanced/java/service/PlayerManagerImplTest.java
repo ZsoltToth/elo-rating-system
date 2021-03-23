@@ -32,7 +32,7 @@ class PlayerManagerImplTest {
     @Test
     void register() throws PlayerAlreadyExistsException {
         // given
-        doNothing().when(repository).add(alice);
+        doNothing().when(repository).create(alice);
         // when
         playerManager.register(alice);
         // then
@@ -42,7 +42,7 @@ class PlayerManagerImplTest {
     @DisplayName("Register throws exception if player already exists")
     void registerShouldTrhowExceptionIfPlayerAlreadyExists() throws PlayerAlreadyExistsException {
         // given
-        doThrow(PlayerAlreadyExistsException.class).when(repository).add(alice);
+        doThrow(PlayerAlreadyExistsException.class).when(repository).create(alice);
         // when
         assertThatThrownBy(() -> {
             playerManager.register(alice);

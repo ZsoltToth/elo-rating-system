@@ -16,7 +16,7 @@ public class PlayerRepositoryCollection implements PlayerRepository {
     }
 
     @Override
-    public void add(Player player) throws PlayerAlreadyExistsException {
+    public void create(Player player) throws PlayerAlreadyExistsException {
         if (players.contains(player)) {
             throw new PlayerAlreadyExistsException();
         }
@@ -29,7 +29,7 @@ public class PlayerRepositoryCollection implements PlayerRepository {
     }
 
     @Override
-    public Player save(Player player) {
+    public Player update(Player player) {
         if (players.contains(player)) {
             players.remove(player);
         }

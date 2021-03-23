@@ -6,31 +6,23 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class EloRatingServiceImpl implements EloRatingService {
 
-    private static final double ADJUSTMENT_FACTOR = 16.0;
-
     private final PlayerManager playerManager;
+
+    private final EloRatingCalculator eloRatingCalculator;
 
     @Override
     public void updatePlayerRankings(Player user, Player opponent, int userWin, int opponentWin) {
-        double userExpected = logisticProbability(user.getScore(), opponent.getScore());
-        double opponentExpected = logisticProbability(opponent.getScore(), user.getScore());
-        user.setScore(calculateScore(user.getScore(), winRate(userWin, opponentWin), userExpected));
-        opponent.setScore(calculateScore(opponent.getScore(), winRate(opponentWin, userWin), opponentExpected));
+        EloRatingCalculator.CalculatedScores calculatedScores = eloRatingCalculator.calculateScores(
+                new EloRatingCalculator.GameResult(
+                    user.getScore(),
+                    opponent.getScore(),
+                    userWin,
+                    opponentWin
+                ));
+        user.setScore(calculatedScores.getUser1());
         playerManager.updatePlayer(user);
+        opponent.setScore(calculatedScores.getUser2());
         playerManager.updatePlayer(opponent);
     }
 
-    private double logisticProbability(double userRating, double opponentRating) {
-        final double exponentialConstant = 400.0;
-        return 1.0 / (1.0 + Math.pow(10.0, (opponentRating - userRating) / exponentialConstant));
-    }
-
-    private double winRate(int userWin, int opponentWin) {
-        return (double) userWin / (double) (userWin + opponentWin);
-    }
-
-    private int calculateScore(int oldScore, double actualWinRate, double expectedWin) {
-        double adjustment = ADJUSTMENT_FACTOR * (actualWinRate - expectedWin);
-        return (int) (oldScore + Math.round(adjustment));
-    }
 }

@@ -13,7 +13,7 @@ public class PlayerManagerImpl implements PlayerManager {
 
     @Override
     public void register(Player player) throws PlayerAlreadyExistsException {
-        repository.add(player);
+        repository.create(player);
     }
 
     @Override
@@ -28,7 +28,7 @@ public class PlayerManagerImpl implements PlayerManager {
 
     @Override
     public Player updatePlayer(Player player) {
-        return repository.save(player);
+        return repository.update(player);
     }
 
     @Override

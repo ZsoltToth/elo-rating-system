@@ -7,9 +7,9 @@ import java.util.Collection;
 
 public interface PlayerRepository {
 
-    void add(Player player) throws PlayerAlreadyExistsException;
+    void create(Player player) throws PlayerAlreadyExistsException;
 
     Collection<Player> readAll();
 
-    Player save(Player player);
+    Player update(Player player);
 }
