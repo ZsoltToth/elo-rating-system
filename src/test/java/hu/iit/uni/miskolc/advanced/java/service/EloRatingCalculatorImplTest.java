@@ -34,14 +34,12 @@ class EloRatingCalculatorImplTest {
         return Stream.of(
             Arguments.of(
                     EloRatingCalculator.GameResult.builder()
-                    .user1score(1000)
-                    .user2score(1000)
-                    .user1win(1)
-                    .user2win(0)
+                    .winnerOriginalScore(1000)
+                    .loserOriginalScore(1000)
                     .build(),
                     EloRatingCalculator.CalculatedScores.builder()
-                    .user1(1008)
-                    .user2(992)
+                    .winnerUpdatedScore(1008)
+                    .loserUpdatedScore(992)
                     .build()
             )
         );

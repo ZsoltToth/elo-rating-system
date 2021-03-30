@@ -7,31 +7,33 @@ public class EloRatingCalculatorImpl implements EloRatingCalculator {
 
     private static final double ADJUSTMENT_FACTOR = 16.0;
 
+    private static final double CERTAIN_EVENT_PROBABILITY = 1.0;
+
+    private static final double IMPOSIBLE_EVENT_PROBABILITY = 0.0;
+
     @Override
     public CalculatedScores calculateScores(GameResult gameResult) {
-        double user1Expected = logisticProbability(gameResult.getUser1score(), gameResult.getUser2score());
-        int user1updatedScore = calculateScore(
-                gameResult.getUser1score(),
-                winRate(gameResult.getUser1win(), gameResult.getUser2win()),
-                user1Expected);
-        double opponentExpected = logisticProbability(gameResult.getUser2score(), gameResult.getUser1score());
-        int user2updateScore = calculateScore(
-                gameResult.getUser2score(),
-                winRate(gameResult.getUser2win(), gameResult.getUser1win()),
-                opponentExpected);
-        return new CalculatedScores(user1updatedScore, user2updateScore);
+        double winnerChance = logisticProbability(
+                gameResult.getWinnerOriginalScore(),
+                gameResult.getLoserOriginalScore());
+        int winnerUpdatedScore = calculateScore(
+                gameResult.getWinnerOriginalScore(),
+                true,
+                winnerChance);
+        int loserUpdatedScore = calculateScore(
+                gameResult.getLoserOriginalScore(),
+                false,
+                (CERTAIN_EVENT_PROBABILITY - winnerChance));
+        return new CalculatedScores(winnerUpdatedScore, loserUpdatedScore);
     }
 
-    private double logisticProbability(double userRating, double opponentRating) {
+    private double logisticProbability(double winnerScore, double loserScore) {
         final double exponentialConstant = 400.0;
-        return 1.0 / (1.0 + Math.pow(10.0, (opponentRating - userRating) / exponentialConstant));
+        return 1.0 / (1.0 + Math.pow(10.0, (loserScore - winnerScore) / exponentialConstant));
     }
 
-    private double winRate(int userWin, int opponentWin) {
-        return (double) userWin / (double) (userWin + opponentWin);
-    }
-
-    private int calculateScore(int oldScore, double actualWinRate, double expectedWin) {
+    private int calculateScore(int oldScore, boolean hasWon, double expectedWin) {
+        final double actualWinRate = hasWon ? CERTAIN_EVENT_PROBABILITY : IMPOSIBLE_EVENT_PROBABILITY;
         double adjustment = ADJUSTMENT_FACTOR * (actualWinRate - expectedWin);
         return (int) (oldScore + Math.round(adjustment));
     }

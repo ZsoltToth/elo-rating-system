@@ -13,21 +13,18 @@ public interface EloRatingCalculator {
     @Builder
     class CalculatedScores {
 
-        private int user1;
+        private int winnerUpdatedScore;
 
-        private int user2;
+        private int loserUpdatedScore;
     }
 
     @AllArgsConstructor
     @Data
     @Builder
     class GameResult {
-        private int user1score;
+        private int winnerOriginalScore;
 
-        private int user2score;
+        private int loserOriginalScore;
 
-        private int user1win;
-
-        private int user2win;
     }
 }
