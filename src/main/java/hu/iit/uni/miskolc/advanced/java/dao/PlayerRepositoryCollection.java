@@ -2,11 +2,13 @@ package hu.iit.uni.miskolc.advanced.java.dao;
 
 import hu.iit.uni.miskolc.advanced.java.model.Player;
 import hu.iit.uni.miskolc.advanced.java.service.exception.PlayerAlreadyExistsException;
+import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
+@Service
 public class PlayerRepositoryCollection implements PlayerRepository {
 
     private Set<Player> players;

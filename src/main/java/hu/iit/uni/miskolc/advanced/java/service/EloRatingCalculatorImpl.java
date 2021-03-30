@@ -1,5 +1,8 @@
 package hu.iit.uni.miskolc.advanced.java.service;
 
+import org.springframework.stereotype.Service;
+
+@Service
 public class EloRatingCalculatorImpl implements EloRatingCalculator {
 
     private static final double ADJUSTMENT_FACTOR = 16.0;

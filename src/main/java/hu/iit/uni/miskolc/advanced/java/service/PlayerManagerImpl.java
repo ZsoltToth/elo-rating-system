@@ -4,8 +4,11 @@ import hu.iit.uni.miskolc.advanced.java.dao.PlayerRepository;
 import hu.iit.uni.miskolc.advanced.java.model.Player;
 import hu.iit.uni.miskolc.advanced.java.service.exception.PlayerAlreadyExistsException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
 import java.util.Collection;
 
+@Service
 @RequiredArgsConstructor
 public class PlayerManagerImpl implements PlayerManager {
 
@@ -19,7 +22,8 @@ public class PlayerManagerImpl implements PlayerManager {
     @Override
     public Player fetchByName(String name) {
         for (Player player : repository.readAll()) {
-            if (player.getName().equals(name)) {
+            if (player.getName()
+                    .equals(name)) {
                 return player;
             }
         }
