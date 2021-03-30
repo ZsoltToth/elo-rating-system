@@ -17,13 +17,11 @@ public class EloRatingServiceImpl implements EloRatingService {
         EloRatingCalculator.CalculatedScores calculatedScores = eloRatingCalculator.calculateScores(
                 new EloRatingCalculator.GameResult(
                         winner.getScore(),
-                        loser.getScore(),
-                        1,
-                        0
+                        loser.getScore()
                 ));
-        winner.setScore(calculatedScores.getUser1());
+        winner.setScore(calculatedScores.getWinnerUpdatedScore());
         playerManager.updatePlayer(winner);
-        loser.setScore(calculatedScores.getUser2());
+        loser.setScore(calculatedScores.getLoserUpdatedScore());
         playerManager.updatePlayer(loser);
     }
 

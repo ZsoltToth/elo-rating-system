@@ -33,13 +33,11 @@ class EloRatingServiceImplTest {
         final int bobNewScore = 992;
         Player alice = new Player("alice", aliceOldScore);
         Player bob = new Player("bob", bobOldScore);
-        final int aliceWin = 1;
-        final int bobWin = 0;
         doReturn(alice).doReturn(bob).when(playerManager).updatePlayer(any());
         doReturn(
                 EloRatingCalculator.CalculatedScores.builder()
-                        .user1(aliceNewScore)
-                        .user2(bobNewScore)
+                        .winnerUpdatedScore(aliceNewScore)
+                        .loserUpdatedScore(bobNewScore)
                         .build())
                 .when(eloRatingCalculator)
                 .calculateScores(any());
