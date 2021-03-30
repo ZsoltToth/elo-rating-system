@@ -44,7 +44,7 @@ class EloRatingServiceImplTest {
                 .when(eloRatingCalculator)
                 .calculateScores(any());
         // when
-        eloRatingService.updatePlayerRankings(alice, bob, aliceWin, bobWin);
+        eloRatingService.updatePlayerRankings(alice, bob);
         // then
         verify(playerManager, times(2)).updatePlayer(any());
     }

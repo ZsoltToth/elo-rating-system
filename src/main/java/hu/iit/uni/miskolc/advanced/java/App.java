@@ -34,8 +34,7 @@ public class App implements CommandLineRunner {
 
         service.updatePlayerRankings(
                 playerManager.fetchByName("Alice"),
-                playerManager.fetchByName("Bob"),
-                1,0
+                playerManager.fetchByName("Bob")
         );
         playerManager.fetchPlayers()
                 .forEach(System.out::println);

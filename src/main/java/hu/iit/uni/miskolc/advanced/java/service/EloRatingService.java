@@ -7,5 +7,5 @@ import hu.iit.uni.miskolc.advanced.java.model.Player;
  */
 public interface EloRatingService {
 
-    void updatePlayerRankings(Player user, Player opponent, int userWin, int opponentWin);
+    void updatePlayerRankings(Player winner, Player loser);
 }
