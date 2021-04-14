@@ -20,7 +20,9 @@ public class PlayerRepositoryCollection implements PlayerRepository {
     @Override
     public void create(Player player) throws PlayerAlreadyExistsException {
         if (players.contains(player)) {
-            throw new PlayerAlreadyExistsException();
+            throw new PlayerAlreadyExistsException(
+                    String.format("Player with name (%s) already exists!", player.getName())
+            );
         }
         players.add(player);
     }
